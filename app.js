@@ -48,7 +48,7 @@ app.get('/V1/info', (req, res) => {
 
 app.get('/V1/farms', (req, res) => {
     console.log(req.params);
-    res.json(farms);
+    res.status(301).json(farms);
 });
 
 app.get('/V1/farms/:farmId', (req, res) => {
