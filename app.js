@@ -1,5 +1,10 @@
 const express = require("express");
 const app = express();
+const { cp } = require('./db/connection.js');
+const promise_mysql = require('promise-mysql');
+
+
+
 const farms = [
     {
         farmId: "1",
@@ -47,14 +52,30 @@ app.get('/V1/info', (req, res) => {
 
 
 app.get('/V1/farms', (req, res) => {
-    console.log(req.params);
-    res.status(301).json(farms);
+    cp
+        .then(pool => {
+            pool.query(`SELECT * FROM farm;`)
+                .then(result => {
+                    res.send(result);
+                })
+                .catch(error => res.status(500).send(error));
+        })
+        .catch(error => res.status(500).send(error));
 });
 
 app.get('/V1/farms/:farmId', (req, res) => {
-    console.log(req.params);
-    res.json(farms[req.params.farmId]);
+    cp
+        .then(pool => {
+            pool.query(`SELECT * FROM farm WHERE farm_id=${req.params.farmId}`)
+                .then(result => {
+                    res.send(result);
+                })
+                .catch(error => res.status(500).send(error));
+        })
+        .catch(error => res.status(500).send(error));
 });
+
+
 // http://localhost:8080/api/V1/user?email=abc@abc.com&pass=1235
 app.get('/V1/user', (req, res) => {
     res.send(req.query);
