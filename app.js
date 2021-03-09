@@ -76,6 +76,31 @@ app.get('/V1/farms/:farmId', (req, res) => {
 });
 
 
+app.get('/V1/products', (req, res) => {
+    cp
+        .then(pool => {
+            pool.query(`SELECT * FROM product`)
+                .then(result => {
+                    res.send(result);
+                })
+                .catch(error => res.status(500).send(error));
+        })
+        .catch(error => res.status(500).send(error));
+});
+
+
+app.get('/V1/products/:productId', (req, res) => {
+    cp
+        .then(pool => {
+            pool.query(`SELECT * FROM product WHERE product_id=${req.params.productId}`)
+                .then(result => {
+                    res.send(result);
+                })
+                .catch(error => res.status(500).send(error));
+        })
+        .catch(error => res.status(500).send(error));
+});
+
 // http://localhost:8080/api/V1/user?email=abc@abc.com&pass=1235
 app.get('/V1/user', (req, res) => {
     res.send(req.query);
