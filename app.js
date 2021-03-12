@@ -95,7 +95,7 @@ app.get('/V1/user/auth/approval', (req, res) => {
     console.log("email:" + email + " pass:" + pass)
     cp
         .then(pool => {
-            pool.query(`SELECT * FROM user WHERE user_email=${email} AND user_password=${pass}`)
+            pool.query(`SELECT * FROM user WHERE user_email="${email}" AND user_password="${pass}"`)
                 .then(result => {
                     res.send(result);
                 })
