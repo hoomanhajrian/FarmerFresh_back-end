@@ -76,7 +76,7 @@ app.get('/V1/user/auth/reg', (req, res) => {
     let name = req.query.name;
     let email = req.query.email;
     let pass = req.query.pass;
-    console.log("email:" + email + " pass:" + pass + name);
+
     cp
         .then(pool => {
             pool.query(`INSERT INTO user (user_name, user_email, user_password) VALUES ("${mysql.escape(name)}", "${mysql.escape(email)}", "${mysql.escape(pass)}");`)
@@ -104,10 +104,6 @@ app.get('/V1/user/auth/approval', (req, res) => {
         .catch(error => res.status(500).send(error));
 
 });
-
-// app.post('/api/V1/user', (req, res) => {
-
-// });
 
 app.get('/*', (req, res) => {
     res.status(404).send("Error404! page does not exist!");
