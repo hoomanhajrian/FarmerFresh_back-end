@@ -101,14 +101,41 @@ app.get('/V1/products/:productId', (req, res) => {
         .catch(error => res.status(500).send(error));
 });
 
-// http://localhost:8080/api/V1/user?email=abc@abc.com&pass=1235
-app.get('/V1/user', (req, res) => {
+// http://localhost:8080/V1/user/auth?name=hoomanhaj&email=hooman&pass=1234
+app.get('/V1/user/auth/reg', (req, res) => {
+    res.send(req.query);
+    let name = req.query.name;
+    let email = req.query.email;
+    let pass = req.query.pass;
+    console.log("email:" + email + " pass:" + pass + name);
+    cp
+        .then(pool => {
+            pool.query(`INSERT INTO user (user_name, user_email, user_password) VALUES ("${name}", ${email}, ${pass});`)
+                .then(result => {
+                    console.log("successfully registerd!")
+                })
+                .catch(error => res.status(500).send(error));
+        })
+        .catch(error => res.status(500).send(error));
+
+});
+
+app.get('/V1/user/auth/approval', (req, res) => {
     res.send(req.query);
     let email = req.query.email;
     let pass = req.query.pass;
     console.log("email:" + email + " pass:" + pass)
-});
+    // cp
+    //     .then(pool => {
+    //         pool.query(`SELECT * FROM product WHERE product_id=${req.params.productId}`)
+    //             .then(result => {
+    //                 res.send(result);
+    //             })
+    //             .catch(error => res.status(500).send(error));
+    //     })
+    //     .catch(error => res.status(500).send(error));
 
+});
 
 // app.post('/api/V1/user', (req, res) => {
 
