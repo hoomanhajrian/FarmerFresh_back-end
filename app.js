@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const { cp } = require('./db/connection.js');
-
+const mysql = require('promise-mysql');
 
 const users = [{ userId: "1", userName: "Hooman", userFname: "HJ", email: "hh@gmail.com", password: "12345", active: true }]
 
@@ -79,7 +79,7 @@ app.get('/V1/user/auth/reg', (req, res) => {
     console.log("email:" + email + " pass:" + pass + name);
     cp
         .then(pool => {
-            pool.query(`INSERT INTO user (user_name, user_email, user_password) VALUES ("${name}", "${email}", "${pass}");`)
+            pool.query(`INSERT INTO user (user_name, user_email, user_password) VALUES ("${mysql.escape(name)}", "${mysql.escape(email)}", "${mysql.escape(pass)}");`)
                 .then(result => {
                     res.send("registered!");
                 })
@@ -93,16 +93,15 @@ app.get('/V1/user/auth/approval', (req, res) => {
     let email = req.query.email;
     let pass = req.query.pass;
     console.log("email:" + email + " pass:" + pass)
-    res.send(req.query);
-    // cp
-    //     .then(pool => {
-    //         pool.query(`SELECT * FROM product WHERE product_id=${req.params.productId}`)
-    //             .then(result => {
-    //                 res.send(result);
-    //             })
-    //             .catch(error => res.status(500).send(error));
-    //     })
-    //     .catch(error => res.status(500).send(error));
+    cp
+        .then(pool => {
+            pool.query(`SELECT * FROM user WHERE user_email=${email} AND user_password=${pass}`)
+                .then(result => {
+                    res.send(result);
+                })
+                .catch(error => res.status(500).send(error));
+        })
+        .catch(error => res.status(500).send(error));
 
 });
 
