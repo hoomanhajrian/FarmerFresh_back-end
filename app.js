@@ -79,7 +79,7 @@ app.get('/V1/user/auth/reg', (req, res) => {
     console.log("email:" + email + " pass:" + pass + name);
     cp
         .then(pool => {
-            pool.query(`INSERT INTO user (user_name, user_email, user_password) VALUES ("${name}", ${email}, ${pass});`)
+            pool.query(`INSERT INTO user (user_name, user_email, user_password) VALUES ("${name}", "${email}", "${pass}");`)
                 .then(result => {
                     res.send("registered!");
                 })
