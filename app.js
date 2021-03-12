@@ -78,15 +78,15 @@ app.get('/V1/user/auth/reg', (req, res) => {
     let pass = req.query.pass;
     console.log("email:" + email + " pass:" + pass + name);
     res.send(req.query);
-    // cp
-    //     .then(pool => {
-    //         pool.query(`INSERT INTO user (user_name, user_email, user_password) VALUES ("${name}", ${email}, ${pass});`)
-    //             .then(result => {
-    //                 console.log("successfully registerd!")
-    //             })
-    //             .catch(error => res.status(500).send(error));
-    //     })
-    //     .catch(error => res.status(500).send(error));
+    cp
+        .then(pool => {
+            pool.query(`INSERT INTO user (user_name, user_email, user_password) VALUES ("${name}", ${email}, ${pass});`)
+                .then(result => {
+                    console.log("successfully registerd!")
+                })
+                .catch(error => res.status(500).send(error));
+        })
+        .catch(error => res.status(500).send(error));
 
 });
 
