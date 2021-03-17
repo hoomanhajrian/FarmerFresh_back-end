@@ -92,12 +92,11 @@ app.get('/V1/user/auth/reg', (req, res) => {
 app.get('/V1/user/auth/approval', (req, res) => {
     let email = req.query.email;
     let pass = req.query.pass;
-    console.log("email:" + email + " pass:" + pass)
     cp
         .then(pool => {
             pool.query(`SELECT * FROM user WHERE user_email="${email}" AND user_password="${pass}"`)
                 .then(result => {
-                    res.send("success");
+                    res.send(result.email);
                 })
                 .catch(error => res.status(500).send(error));
         })
