@@ -71,7 +71,7 @@ app.get('/V1/products/:productId', (req, res) => {
         .catch(error => res.status(500).send(error));
 });
 
-// http://localhost:8080/V1/user/auth?name=hoomanhaj&email=hooman&pass=1234
+
 app.get('/V1/user/auth/reg', (req, res) => {
     let name = req.query.name;
     let email = req.query.email;
@@ -97,7 +97,7 @@ app.get('/V1/user/auth/approval', (req, res) => {
         .then(pool => {
             pool.query(`SELECT * FROM user WHERE user_email="${email}" AND user_password="${pass}"`)
                 .then(result => {
-                    res.send(result);
+                    res.send("success");
                 })
                 .catch(error => res.status(500).send(error));
         })
