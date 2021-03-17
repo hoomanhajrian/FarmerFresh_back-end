@@ -96,7 +96,7 @@ app.get('/V1/user/auth/approval', (req, res) => {
         .then(pool => {
             pool.query(`SELECT * FROM user WHERE user_email="${email}" AND user_password="${pass}"`)
                 .then(result => {
-                    res.status(200).send(result);
+                    res.status(200).send(result[0].user_email);
                 })
                 .catch(error => res.status(500).send(error));
         })
