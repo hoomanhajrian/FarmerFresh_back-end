@@ -80,9 +80,7 @@ app.get('/V1/user/auth/reg', (req, res) => {
     cp
         .then(pool => {
             pool.query(`INSERT INTO user (user_name, user_email, user_password) VALUES ("${mysql.escape(name)}", "${mysql.escape(email)}", "${mysql.escape(pass)}");`)
-                .then(result => {
-                    res.send("registered!");
-                })
+                .then(res.status(200).send("registered!"))
                 .catch(error => res.status(500).send(error));
         })
         .catch(error => res.status(500).send(error));
