@@ -45,7 +45,6 @@ app.get('/V1/farms/:farmId', (req, res) => {
         .catch(error => res.status(500).send(error));
 });
 
-
 app.get('/V1/products', (req, res) => {
     cp
         .then(pool => {
@@ -62,7 +61,19 @@ app.get('/V1/products', (req, res) => {
 app.get('/V1/products/:productId', (req, res) => {
     cp
         .then(pool => {
-            pool.query(`SELECT * FROM product WHERE product_id=${req.params.productId}`)
+            pool.query(`SELECT * FROM product WHERE product_id IN (${req.params.productId})`)
+                .then(result => {
+                    res.send(result);
+                })
+                .catch(error => res.status(500).send(error));
+        })
+        .catch(error => res.status(500).send(error));
+});
+
+app.get('/V1/getfarmproducts/:farmId', (req, res) => {
+    cp
+        .then(pool => {
+            pool.query(`SELECT product_product_id FROM farmerfresh.farm_has_product WHERE farm_farm_id = ${req.params.farmId};`)
                 .then(result => {
                     res.send(result);
                 })
