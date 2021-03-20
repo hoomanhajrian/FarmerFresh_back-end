@@ -61,7 +61,7 @@ app.get('/V1/products', (req, res) => {
 app.get('/V1/products/:productId', (req, res) => {
     cp
         .then(pool => {
-            pool.query(`SELECT * FROM product WHERE product_id IN (${req.params.productId})`)
+            pool.query(`SELECT * FROM product WHERE product_id IN ${req.params.productId}`)
                 .then(result => {
                     res.send(result);
                 })
