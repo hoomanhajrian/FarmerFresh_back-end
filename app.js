@@ -95,11 +95,15 @@ app.get('/V1/addtocart', (req, res) => {
 
     cp
         .then(pool => {
-            console.log({ "status": "200", "message": "Added Successfully", "User_ID": userId, "Farm_Name": farmName, "Product_Name": pName, "Product_Image": pImg, "Product_Family_Name": pFName, "Product_Price": pPrice, "Product_Description": pDescription, "Quantity": quantity });
 
             pool.query(`INSERT INTO cart (user_id, farm_name, product_name, product_img, product_Fname, product_price, product_description, quantity) VALUES (${mysql.escape(userId)}, ${mysql.escape(farmName)}, ${mysql.escape(pName)}, ${mysql.escape(pImg)}, ${mysql.escape(pFName)}, ${mysql.escape(pPrice)}, ${mysql.escape(pDescription)}, ${mysql.escape(quantity)});`)
 
-                .then(res.status(200).json.send({ "status": "200", "message": "Added Successfully", "User_ID": userId, "Farm_Name": farmName, "Product_Name": pName, "Product_Image": pImg, "Product_Family_Name": pFName, "Product_Price": pPrice, "Product_Description": pDescription, "Quantity": quantity }))
+                .then(result => {
+                    console.log(result);
+                    console.log({ "status": "200", "message": "Added Successfully", "User_ID": userId, "Farm_Name": farmName, "Product_Name": pName, "Product_Image": pImg, "Product_Family_Name": pFName, "Product_Price": pPrice, "Product_Description": pDescription, "Quantity": quantity });
+
+                    res.status(200).json.send({ "status": "200", "message": "Added Successfully", "User_ID": userId, "Farm_Name": farmName, "Product_Name": pName, "Product_Image": pImg, "Product_Family_Name": pFName, "Product_Price": pPrice, "Product_Description": pDescription, "Quantity": quantity })
+                })
 
                 .catch(error => res.status(500).send(error));
         })
