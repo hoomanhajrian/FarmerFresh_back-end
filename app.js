@@ -110,6 +110,21 @@ app.get('/V1/addtocart', (req, res) => {
         .catch(error => res.status(500).send(error));
 });
 
+
+app.get('/V1/showcart', (req, res) => {
+    cp
+        .then(pool => {
+            pool.query(`SELECT * from cart`)
+                .then(result => {
+                    res.send(result);
+                })
+                .catch(error => res.status(500).send(error));
+        })
+        .catch(error => res.status(500).send(error));
+});
+
+
+
 app.get('/V1/showcart/:userId', (req, res) => {
     cp
         .then(pool => {
