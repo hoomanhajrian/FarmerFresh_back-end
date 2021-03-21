@@ -82,6 +82,37 @@ app.get('/V1/getfarmproducts/:farmId', (req, res) => {
         .catch(error => res.status(500).send(error));
 });
 
+app.get('/V1/addtocart', (req, res) => {
+
+    let userId = req.query.userid;
+    let farmName = req.query.farmName;
+    let pName = req.query.pName;
+    let pFName = req.query.pFName;
+    let pPrice = req.query.pPrice;
+    let pDescription = req.query.pDescription;
+    let quantity = req.query.quantity;
+
+    cp
+        .then(pool => {
+            pool.query(`INSERT INTO cart (user_id, farm_name, product_name, product_Fname, product_price, product_description, quantity) VALUES (${userId}, ${farmName}, ${pName}, ${pFName}, ${pPrice}, ${pDescription}, ${quantity})`)
+                .then(res.status(200).json.send({ "status": "200", "message": "Added Successfully", "User_ID": userId, "Farm_Name": farmName, "Product_Name": pName, "Product_Family_Name": pFName, "Product_Price": pPrice, "Product_Description": pDescription, "Quantity": quantity }))
+                .catch(error => res.status(500).send(error));
+        })
+        .catch(error => res.status(500).send(error));
+});
+
+app.get('/V1/showcart/:userId', (req, res) => {
+    cp
+        .then(pool => {
+            pool.query(`SELECT * from cart WHERE user_id = ${req.params.userId}`)
+                .then(result => {
+                    res.send(result);
+                })
+                .catch(error => res.status(500).send(error));
+        })
+        .catch(error => res.status(500).send(error));
+});
+
 
 app.get('/V1/user/auth/reg', (req, res) => {
     let name = req.query.name;
