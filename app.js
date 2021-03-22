@@ -70,7 +70,7 @@ app.get('/V1/products/:productId', (req, res) => {
         .catch(error => res.status(500).send(error));
 });
 
-app.get('/V1/getfarmproducts/:farmId', (req, res) => {
+app.get('/V1/getfarmproducts?farmid=:farmId', (req, res) => {
     cp
         .then(pool => {
             pool.query(`select * from farmerfresh.product where farmerfresh.product.product_id in (select product_product_id from farmerfresh.farm_has_product where farmerfresh.farm_has_product.farm_farm_id = ${req.params.farmId});`)
@@ -81,16 +81,16 @@ app.get('/V1/getfarmproducts/:farmId', (req, res) => {
         })
         .catch(error => res.status(500).send(error));
 });
-
+// addtocart?user_id=(int)&farm_name=""&product_name=""&product_image="",product_family_name="",product_price="",product_description=""&quantity=""
 app.get('/V1/addtocart', (req, res) => {
 
-    let userId = req.query.userid;
-    let farmName = req.query.farmName;
-    let pName = req.query.pName;
-    let pImg = req.query.pImg;
-    let pFName = req.query.pFName;
-    let pPrice = req.query.pPrice;
-    let pDescription = req.query.pDescription;
+    let userId = req.query.user_id;
+    let farmName = req.query.farm_name;
+    let pName = req.query.product_name;
+    let pImg = req.query.product_image;
+    let pFName = req.query.product_family_name;
+    let pPrice = req.query.product_price;
+    let pDescription = req.query.product_description;
     let quantity = req.query.quantity;
 
     cp
@@ -120,7 +120,7 @@ app.get('/V1/showcart', (req, res) => {
 
 
 
-app.get('/V1/showcart/:userId', (req, res) => {
+app.get('/V1/showcart?userid=:userId', (req, res) => {
     cp
         .then(pool => {
             pool.query(`SELECT * from cart WHERE user_id = ${req.params.userId}`)
