@@ -2,8 +2,10 @@ const express = require("express");
 const app = express();
 const { cp } = require('./db/connection.js');
 const mysql = require('promise-mysql');
+const bodyParser = require("body-parser");
 
 app.use(bodyParser.urlencoded({ extended: true }));
+
 
 let server = app.listen(8080, () => {
     console.log('Server is listening on port 8080')
