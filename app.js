@@ -106,6 +106,18 @@ app.post('/V1/addtocart', (req, res) => {
         .catch(error => res.status(500).send(error));
 });
 
+app.post('/V1/removefromcart', (req, res) => {
+
+    let cartid = req.body.cart_id;
+
+    cp
+        .then(pool => {
+            pool.query(`DELETE FROM cart WHERE cart_id=${cartid}`)
+                .then(res.status(200).send({ "status": "200", "message": "Cart DELETED Successfully", "data": req.body }))
+                .catch(error => res.status(500).send(error));
+        })
+        .catch(error => res.status(500).send(error));
+});
 
 app.get('/V1/showcart', (req, res) => {
     cp
