@@ -31,11 +31,11 @@ app.get('/V1/farms', (req, res) => {
         .catch(error => res.status(500).send(error));
 });
 
-app.get('/V1/getfarmproducts/products?farmId=:farmid', (req, res) => {
+app.post('/V1/getfarmproducts', (req, res) => {
 
     cp
         .then(pool => {
-            pool.query(`select * from farmerfresh.product where farmerfresh.product.product_id in (select product_product_id from farmerfresh.farm_has_product where farmerfresh.farm_has_product.farm_farm_id = ${req.query.farmid});`)
+            pool.query(`select * from farmerfresh.product where farmerfresh.product.product_id in (select product_product_id from farmerfresh.farm_has_product where farmerfresh.farm_has_product.farm_farm_id = ${req.query.farmId});`)
                 .then(result => {
                     res.send(result);
                 })
