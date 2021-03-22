@@ -153,7 +153,7 @@ app.get('/V1/user/auth/approval', (req, res) => {
 
 });
 
-app.get('/V1/getfarmproducts/?farmid=:farmid', (req, res) => {
+app.get('/V1/farmproducts?farmid=:farmid', (req, res) => {
     cp
         .then(pool => {
             pool.query(`select * from farmerfresh.product where farmerfresh.product.product_id in (select product_product_id from farmerfresh.farm_has_product where farmerfresh.farm_has_product.farm_farm_id = ${req.params.farmid});`)
