@@ -3,8 +3,8 @@ const app = express();
 const { cp } = require('./db/connection.js');
 const mysql = require('promise-mysql');
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.json());
 
 let server = app.listen(8080, () => {
     console.log('Server is listening on port 8080')
@@ -82,14 +82,14 @@ app.get('/V1/getfarmproducts?farmid=:farmId', (req, res) => {
 // https://farmerfresh.ca/api/V1/addtocart?user_id=1&farm_name=apple%20farm&product_name=apples&product_image=http:something&product_family_name=%22%22&product_price=%22%22&product_description=%22%22&quantity=%22%22
 app.get('/V1/addtocart', (req, res) => {
 
-    let userId = req.query.user_id;
-    let farmName = req.query.farm_name;
-    let pName = req.query.product_name;
-    let pImg = req.query.product_image;
-    let pFName = req.query.product_family_name;
-    let pPrice = req.query.product_price;
-    let pDescription = req.query.product_description;
-    let quantity = req.query.quantity;
+    let userId = req.body.user_id;
+    let farmName = req.body.farm_name;
+    let pName = req.body.product_name;
+    let pImg = req.body.product_image;
+    let pFName = req.body.product_family_name;
+    let pPrice = req.body.product_price;
+    let pDescription = req.body.product_description;
+    let quantity = req.body.quantity;
 
     cp
         .then(pool => {
