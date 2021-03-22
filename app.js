@@ -120,7 +120,7 @@ app.get('/V1/showcart', (req, res) => {
 
 
 
-app.post('/V1/showcart?userid=:userId', (req, res) => {
+app.get('/V1/showcart?userid=:userId', (req, res) => {
     cp
         .then(pool => {
             pool.query(`SELECT * from cart WHERE user_id = ${req.params.userId}`)
