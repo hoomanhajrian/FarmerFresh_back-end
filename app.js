@@ -31,7 +31,7 @@ app.get('/V1/farms', (req, res) => {
         .catch(error => res.status(500).send(error));
 });
 
-app.get('/V1/getfarmproducts/products', (req, res) => {
+app.get('/V1/getfarmproducts/products?farmId=:farmid', (req, res) => {
 
     cp
         .then(pool => {
