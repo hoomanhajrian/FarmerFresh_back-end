@@ -81,7 +81,7 @@ app.get('/V1/getfarmproducts?farmid=:farmId', (req, res) => {
         })
         .catch(error => res.status(500).send(error));
 });
-// addtocart?user_id=(int)&farm_name=""&product_name=""&product_image="",product_family_name="",product_price="",product_description=""&quantity=""
+// api/V1/addtocart?user_id=(int)&farm_name=""&product_name=""&product_image="",product_family_name="",product_price="",product_description=""&quantity=""
 app.get('/V1/addtocart', (req, res) => {
 
     let userId = req.query.user_id;
@@ -120,7 +120,7 @@ app.get('/V1/showcart', (req, res) => {
 
 
 
-app.get('/V1/showcart?userid=:userId', (req, res) => {
+app.post('/V1/showcart?userid=:userId', (req, res) => {
     cp
         .then(pool => {
             pool.query(`SELECT * from cart WHERE user_id = ${req.params.userId}`)
