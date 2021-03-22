@@ -69,7 +69,7 @@ app.get('/V1/products/:productId', (req, res) => {
         .catch(error => res.status(500).send(error));
 });
 
-app.get('/V1/getfarmproducts?farmid=:farmId', (req, res) => {
+app.get('/V1/getfarmproducts?userid=:userId', (req, res) => {
     cp
         .then(pool => {
             pool.query(`select * from farmerfresh.product where farmerfresh.product.product_id in (select product_product_id from farmerfresh.farm_has_product where farmerfresh.farm_has_product.farm_farm_id = ${req.params.farmId});`)
