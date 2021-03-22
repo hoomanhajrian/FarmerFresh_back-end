@@ -45,18 +45,6 @@ app.get('/V1/farms/:farmId', (req, res) => {
 });
 
 
-app.get('/V1/getfarmproducts/?farmid=:farmid', (req, res) => {
-    cp
-        .then(pool => {
-            pool.query(`select * from farmerfresh.product where farmerfresh.product.product_id in (select product_product_id from farmerfresh.farm_has_product where farmerfresh.farm_has_product.farm_farm_id = ${req.params.farmid});`)
-                .then(result => {
-                    res.send(result);
-                })
-                .catch(error => res.status(500).send(error));
-        })
-        .catch(error => res.status(500).send(error));
-});
-
 app.get('/V1/products', (req, res) => {
     cp
         .then(pool => {
@@ -165,6 +153,19 @@ app.get('/V1/user/auth/approval', (req, res) => {
 
 });
 
-app.get('/*', (req, res) => {
-    res.status(404).send("Error404! page does not exist!");
+app.get('/V1/getfarmproducts/?farmid=:farmid', (req, res) => {
+    cp
+        .then(pool => {
+            pool.query(`select * from farmerfresh.product where farmerfresh.product.product_id in (select product_product_id from farmerfresh.farm_has_product where farmerfresh.farm_has_product.farm_farm_id = ${req.params.farmid});`)
+                .then(result => {
+                    res.send(result);
+                })
+                .catch(error => res.status(500).send(error));
+        })
+        .catch(error => res.status(500).send(error));
 });
+
+
+// app.get('/*', (req, res) => {
+//     res.status(404).send("Error404! page does not exist!");
+// });
