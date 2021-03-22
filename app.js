@@ -80,7 +80,7 @@ app.get('/V1/getfarmproducts?farmid=:farmId', (req, res) => {
         .catch(error => res.status(500).send(error));
 });
 // https://farmerfresh.ca/api/V1/addtocart?user_id=1&farm_name=apple%20farm&product_name=apples&product_image=http:something&product_family_name=%22%22&product_price=%22%22&product_description=%22%22&quantity=%22%22
-app.get('/V1/addtocart', (req, res) => {
+app.post('/V1/addtocart', (req, res) => {
 
     let userId = req.body.user_id;
     let farmName = req.body.farm_name;
