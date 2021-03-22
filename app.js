@@ -178,6 +178,6 @@ app.get('/V1/user/auth/approval', (req, res) => {
 
 
 
-// app.get('/*', (req, res) => {
-//     res.status(404).send("Error404! page does not exist!");
-// });
+ app.get('/*', (req, res) => {
+     res.status(404).send("Error404! page does not exist!");
+ });
