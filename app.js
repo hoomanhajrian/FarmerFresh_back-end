@@ -95,7 +95,7 @@ app.post('/V1/addtocart', (req, res) => {
 
             pool.query(`INSERT INTO cart (user_id, farm_name, product_name, product_img, product_Fname, product_price, product_description, quantity) VALUES (${mysql.escape(userId)}, ${mysql.escape(farmName)}, ${mysql.escape(pName)}, ${mysql.escape(pImg)}, ${mysql.escape(pFName)}, ${mysql.escape(pPrice)}, ${mysql.escape(pDescription)}, ${mysql.escape(quantity)});`)
 
-                .then(res.status(200).send({ "status": "200", "message": "Added Successfully", req.body }))
+                .then(res.status(200).send({ "status": "200", "message": "Added Successfully", "data": req.body }))
 
                 .catch(error => res.status(500).send(error));
         })
