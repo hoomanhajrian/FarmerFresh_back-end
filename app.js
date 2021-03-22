@@ -69,17 +69,7 @@ app.get('/V1/products/:productId', (req, res) => {
         .catch(error => res.status(500).send(error));
 });
 
-app.get('/V1/getfarmproducts?farmid=:farmid', (req, res) => {
-    cp
-        .then(pool => {
-            pool.query(`select * from farmerfresh.product where farmerfresh.product.product_id in (select product_product_id from farmerfresh.farm_has_product where farmerfresh.farm_has_product.farm_farm_id = ${req.params.farmid});`)
-                .then(result => {
-                    res.send(result);
-                })
-                .catch(error => res.status(500).send(error));
-        })
-        .catch(error => res.status(500).send(error));
-});
+
 // https://farmerfresh.ca/api/V1/addtocart?user_id=1&farm_name=apple%20farm&product_name=apples&product_image=http:something&product_family_name=%22%22&product_price=%22%22&product_description=%22%22&quantity=%22%22
 app.post('/V1/addtocart', (req, res) => {
 
@@ -131,6 +121,17 @@ app.get('/V1/showcart?userid=:userId', (req, res) => {
         .catch(error => res.status(500).send(error));
 });
 
+app.get('/V1/getfarmproducts?farmid=:farmid', (req, res) => {
+    cp
+        .then(pool => {
+            pool.query(`select * from farmerfresh.product where farmerfresh.product.product_id in (select product_product_id from farmerfresh.farm_has_product where farmerfresh.farm_has_product.farm_farm_id = ${req.params.farmid});`)
+                .then(result => {
+                    res.send(result);
+                })
+                .catch(error => res.status(500).send(error));
+        })
+        .catch(error => res.status(500).send(error));
+});
 
 app.get('/V1/user/auth/reg', (req, res) => {
     let name = req.query.name;
