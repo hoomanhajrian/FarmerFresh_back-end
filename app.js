@@ -3,8 +3,7 @@ const app = express();
 const { cp } = require('./db/connection.js');
 const mysql = require('promise-mysql');
 
-// app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 let server = app.listen(8080, () => {
     console.log('Server is listening on port 8080')
@@ -96,7 +95,7 @@ app.post('/V1/addtocart', (req, res) => {
 
             pool.query(`INSERT INTO cart (user_id, farm_name, product_name, product_img, product_Fname, product_price, product_description, quantity) VALUES (${mysql.escape(userId)}, ${mysql.escape(farmName)}, ${mysql.escape(pName)}, ${mysql.escape(pImg)}, ${mysql.escape(pFName)}, ${mysql.escape(pPrice)}, ${mysql.escape(pDescription)}, ${mysql.escape(quantity)});`)
 
-                .then(res.status(200).send({ "status": "200", "message": "Added Successfully", "User_ID": userId, "Farm_Name": farmName, "Product_Name": pName, "Product_Image": pImg, "Product_Family_Name": pFName, "Product_Price": pPrice, "Product_Description": pDescription, "Quantity": quantity }))
+                .then(res.status(200).send({ "status": "200", "message": "Added Successfully", req.body }))
 
                 .catch(error => res.status(500).send(error));
         })
