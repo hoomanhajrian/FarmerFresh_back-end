@@ -32,10 +32,9 @@ app.get('/V1/farms', (req, res) => {
 });
 
 app.post('/V1/getfarmproducts', (req, res) => {
-    console.log(req.body.farmid);
     cp
         .then(pool => {
-            pool.query(`select * from farmerfresh.product where farmerfresh.product.product_id in (select product_product_id from farmerfresh.farm_has_product where farmerfresh.farm_has_product.farm_farm_id = ${req.body.farmid});`)
+            pool.query(`select * from farmerfresh.product where farmerfresh.product.product_id in (select product_product_id from farmerfresh.farm_has_product where farmerfresh.farm_has_product.farm_farm_id = ${req.body.farm_id});`)
                 .then(result => {
                     res.send(result);
                 })
