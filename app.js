@@ -146,6 +146,60 @@ app.get('/V1/showcart?userid=:userId', (req, res) => {
 });
 
 
+app.post('/V1/setorder', (req, res) => {
+
+    let orderdate = req.body.order_date;
+    let schedule = req.body.order_schedule;
+    let userId = req.body.user_id;
+    let quantity = req.body.order_quantity;
+    cp
+        .then(pool => {
+            pool.query(`INSERT INTO order (order_date, order_status, order_schedule, user_user_id, pickup_or_delivery, order_quantity) VALUES (${mysql.escape(orderdate)}, 'pending', ${mysql.escape(schedule)}, ${mysql.escape(userId)}, 'pickup', ${mysql.escape(quantity)});`)
+                .then(result => {
+                    res.send(result);
+                })
+                .catch(error => res.status(500).send(error));
+        })
+        .catch(error => res.status(500).send(error));
+})
+
+app.get('/V1/showorders', (req, res) => {
+    cp
+        .then(pool => {
+            pool.query(`SELECT * from order`)
+                .then(result => {
+                    res.send(result);
+                })
+                .catch(error => res.status(500).send(error));
+        })
+        .catch(error => res.status(500).send(error));
+});
+
+app.get('/V1/showorders/completed/:userId', (req, res) => {
+    cp
+        .then(pool => {
+            pool.query(`SELECT * FROM farmerfresh.order where order_status = "completed" AND user_user_id = ${req.params.userId};`)
+                .then(result => {
+                    res.send(result);
+                })
+                .catch(error => res.status(500).send(error));
+        })
+        .catch(error => res.status(500).send(error));
+});
+
+app.get('/V1/showorders/pending/:userId', (req, res) => {
+    cp
+        .then(pool => {
+            pool.query(`SELECT * FROM farmerfresh.order where order_status = "pending" AND user_user_id = ${req.params.userId};`)
+                .then(result => {
+                    res.send(result);
+                })
+                .catch(error => res.status(500).send(error));
+        })
+        .catch(error => res.status(500).send(error));
+});
+
+
 app.get('/V1/user/auth/reg', (req, res) => {
     let name = req.query.name;
     let email = req.query.email;
@@ -178,6 +232,6 @@ app.get('/V1/user/auth/approval', (req, res) => {
 
 
 
- app.get('/*', (req, res) => {
-     res.status(404).send("Error404! page does not exist!");
- });
+app.get('/*', (req, res) => {
+    res.status(404).send("Error404! page does not exist!");
+});
