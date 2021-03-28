@@ -145,6 +145,7 @@ app.get('/V1/showcart?userid=:userId', (req, res) => {
         .catch(error => res.status(500).send(error));
 });
 
+// https://farmerfresh.ca/api/V1/setorder?order_date=1.3.2021&order_schedule=2.3.2021&user_id=5&quantity=2.3
 
 app.post('/V1/setorder', (req, res) => {
 
@@ -155,13 +156,11 @@ app.post('/V1/setorder', (req, res) => {
     cp
         .then(pool => {
             pool.query(`INSERT INTO order (order_date, order_status, order_schedule, user_user_id, pickup_or_delivery, order_quantity) VALUES (${mysql.escape(orderdate)}, 'pending', ${mysql.escape(schedule)}, ${mysql.escape(userId)}, 'pickup', ${mysql.escape(quantity)});`)
-                .then(result => {
-                    res.send(result);
-                })
+                .then({ "status": "200", "message": "order set successfuly", "data": req.body })
                 .catch(error => res.status(500).send(error));
         })
         .catch(error => res.status(500).send(error));
-})
+});
 
 app.get('/V1/showorders', (req, res) => {
     cp
