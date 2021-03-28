@@ -165,7 +165,7 @@ app.post('/V1/setorder', (req, res) => {
 app.get('/V1/showorders', (req, res) => {
     cp
         .then(pool => {
-            pool.query(`SELECT * from order`)
+            pool.query(`SELECT * from farmerfresh.order;`)
                 .then(result => {
                     res.send(result);
                 })
