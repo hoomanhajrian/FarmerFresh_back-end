@@ -155,7 +155,7 @@ app.post('/V1/setorder', (req, res) => {
     let quantity = req.body.order_quantity;
     cp
         .then(pool => {
-            pool.query(`INSERT INTO order (order_date, order_status, order_schedule, user_user_id, pickup_or_delivery, order_quantity) VALUES (${mysql.escape(orderdate)}, 'pending', ${mysql.escape(schedule)}, ${mysql.escape(userId)}, 'pickup', ${mysql.escape(quantity)});`)
+            pool.query(`INSERT INTO farmerfresh.order (order_date, order_status, order_schedule, user_user_id, pickup_or_delivery, order_quantity) VALUES (${mysql.escape(orderdate)}, 'pending', ${mysql.escape(schedule)}, ${mysql.escape(userId)}, 'pickup', ${mysql.escape(quantity)});`)
                 .then({ "status": "200", "message": "order set successfuly", "data": req.body })
                 .catch(error => res.status(500).send(error));
         })
