@@ -164,7 +164,7 @@ app.post('/V1/setorder', (req, res) => {
     cp
         .then(pool => {
             pool.query(`INSERT INTO farmerfresh.order (order_date, farm_name, order_status, order_schedule, user_user_id, pickup_or_delivery, order_quantity, price) VALUES (${mysql.escape(orderdate)},${mysql.escape(farmName)} , 'pending', ${mysql.escape(schedule)}, ${mysql.escape(userId)}, 'pickup', ${mysql.escape(quantity)}, ${mysql.escape(price)});`)
-                .then(res.status(200).send({ "status": "200", "message": "order set successfuly", "data": response }))
+                .then(res.status(200).send({ "status": "200", "message": "order set successfuly", "data": req.body }))
                 .catch(error => res.status(500).send(error));
         })
         .catch(error => res.status(500).send(error));
