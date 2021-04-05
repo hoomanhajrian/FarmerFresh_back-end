@@ -157,14 +157,17 @@ app.post('/V1/setorder', (req, res) => {
     let price = req.body.price;
 
 
-    // pool.query(`SELECT order_id from farmerfresh.order WHERE order_date="${orderdate}" AND farm_name="${farmName}" AND order_schedule="${schedule}" AND user_user_id="${userId}"`)
+    /*// pool.query(`SELECT order_id from farmerfresh.order WHERE order_date="${orderdate}" AND farm_name="${farmName}" AND order_schedule="${schedule}" AND user_user_id="${userId}"`)
     // .then(response => { res.status(200).send({ "status": "200", "message": "order set successfuly", "data": response })) })
-    // .catch(error => res.status(500).send({ "status": "200", "message": "order failed", "data": error }))
+    // .catch(error => res.status(500).send({ "status": "200", "message": "order failed", "data": error }))*/
 
     cp
         .then(pool => {
             pool.query(`INSERT INTO farmerfresh.order (order_date, farm_name, order_status, order_schedule, user_user_id, pickup_or_delivery, order_quantity, price) VALUES (${mysql.escape(orderdate)},${mysql.escape(farmName)} , 'pending', ${mysql.escape(schedule)}, ${mysql.escape(userId)}, 'pickup', ${mysql.escape(quantity)}, ${mysql.escape(price)});`)
-                .then(res.status(200).send({ "status": "200", "message": "order set successfuly", "data": req.body }))
+                .then(res.status(200).send(pool.query(`SELECT order_id from farmerfresh.order WHERE order_date="${orderdate}" AND farm_name="${farmName}" AND order_schedule="${schedule}" AND user_user_id="${userId}"`)
+                    .then(orderId => { res.status(200).send({ "status": "200", "message": "order set successfuly", "data": orderId }) })
+                    .catch(error => res.status(500).send({ "status": "500", "message": "order failed", "data": error }))
+                ))
                 .catch(error => res.status(500).send(error));
         })
         .catch(error => res.status(500).send(error));
