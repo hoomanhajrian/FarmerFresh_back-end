@@ -3,6 +3,8 @@
 Use node package manager [npm](https://nodejs.org/en/) to install packages.
 Back end is based on [node/express](https://www.npmjs.com/package/express). 
 
+Run the app using ```node app.js```
+
 ## Usage
 
 This app is being used for [Farmer Fresh](https://farmerfresh.ca/) backend located on AWS servers.
