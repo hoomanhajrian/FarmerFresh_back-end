@@ -1,10 +1,7 @@
 ## Installation
 
 Use node package manager [npm](https://nodejs.org/en/) to install packages.
-
-```bash
-pip install foobar
-```
+Back end is based on [node/express](https://www.npmjs.com/package/express). 
 
 ## Usage
 
